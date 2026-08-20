@@ -15,11 +15,11 @@
       "config": [
         { "key": "STRIPE_API_KEY", "secret": true, "description": "Stripe secret API key used to create and capture charges server-side." }
       ] },
-    { "kind": "external", "name": "email-provider", "description": "Sends order confirmation and fulfillment status emails to shoppers; concrete provider undecided — see candidates.",
-      "candidates": [
-        { "name": "sendgrid", "style": "rest-api" },
-        { "name": "postmark", "style": "rest-api" },
-        { "name": "resend", "style": "rest-api" }
+    { "kind": "external", "name": "email-provider", "style": "rest-api", "specPath": "https://raw.githubusercontent.com/twilio/sendgrid-oai/main/spec/json/tsg_mail_v3.json",
+      "description": "SendGrid's Mail Send v3 REST API for order confirmation and fulfillment status emails to shoppers.",
+      "config": [
+        { "key": "SENDGRID_API_KEY", "secret": true, "description": "SendGrid API key used to authenticate mail-send requests." },
+        { "key": "SENDGRID_FROM_EMAIL", "defaultValue": "orders@ceramics-store.example", "description": "The verified sender address order emails are sent from." }
       ] }
   ],
   "description": "The backend for the ceramics store: product catalog with stock tracking, cart, checkout (card payment + flat-rate shipping), order history, and admin catalog/order management. Sits behind the gateway on the intranet exposure; the webapp is the only caller. Does not issue tokens (Thunder does) and does not talk to shipping carriers.",
