@@ -1,0 +1,35 @@
+apiVersion: openchoreo.dev/v1alpha1
+metadata:
+  name: ceramics-api
+
+endpoints:
+  - name: http
+    type: HTTP
+    port: 9090
+    basePath: /
+    visibility:
+      - project
+      - external
+
+dependencies:
+  resources:
+    - ref: c1-ceramics-db
+      envBindings:
+        dbname: CERAMICS_DB_DBNAME
+        host: CERAMICS_DB_HOST
+        password: CERAMICS_DB_PASSWORD
+        port: CERAMICS_DB_PORT
+        user: CERAMICS_DB_USER
+    - ref: c1-thunder-auth
+      envBindings:
+        client_id: THUNDER_AUTH_CLIENT_ID
+        issuer: THUNDER_AUTH_ISSUER
+        jwks_url: THUNDER_AUTH_JWKS_URL
+        scopes: THUNDER_AUTH_SCOPES
+    - ref: c1-payment-provider
+      envBindings:
+        STRIPE_API_KEY: STRIPE_API_KEY
+    - ref: c1-email-provider
+      envBindings:
+        SENDGRID_API_KEY: SENDGRID_API_KEY
+        SENDGRID_FROM_EMAIL: SENDGRID_FROM_EMAIL
