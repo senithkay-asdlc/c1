@@ -1,0 +1,4 @@
+apiVersion = "agentic-engineer/v1"
+name = "c1"
+createdAt = "2026-08-20T08:45:34Z"
+idea = "An online store for handmade ceramics with a product catalog, cart, and checkout"
