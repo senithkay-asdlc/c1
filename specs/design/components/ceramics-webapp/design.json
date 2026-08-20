@@ -8,6 +8,7 @@
   "entrypoint": "deployment/web-application",
   "exposure": "internet",
   "description": "The single-page storefront: a public catalog and guest/signed-in checkout for Shoppers, plus a Store Admin console (catalog and order management) served from the same bundle with role-scoped screens. Talks only to ceramics-api for data; holds no secrets and never calls payment or email providers directly.",
+  "stories": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
   "dependencies": [
     {
       "kind": "component",
