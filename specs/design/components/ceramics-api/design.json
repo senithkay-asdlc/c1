@@ -10,11 +10,10 @@
   "dependencies": [
     { "kind": "platform-resource", "name": "ceramics-db", "resourceType": "postgres", "description": "Stores products, stock levels, carts, orders, and order line items." },
     { "kind": "platform-resource", "name": "thunder-auth", "resourceType": "thunder-app", "parameters": { "scopes": "openid profile email" }, "description": "Validates caller tokens issued by Thunder and resolves the caller's role (Shopper vs Store Admin) for protected endpoints." },
-    { "kind": "external", "name": "payment-provider", "description": "Card payment processing at checkout; concrete provider undecided — see candidates.",
-      "candidates": [
-        { "name": "stripe", "style": "rest-api" },
-        { "name": "braintree", "style": "rest-api" },
-        { "name": "adyen", "style": "rest-api" }
+    { "kind": "external", "name": "payment-provider", "style": "rest-api", "specPath": "https://raw.githubusercontent.com/stripe/openapi/master/openapi/spec3.json",
+      "description": "Stripe's REST API for tokenized card charges at checkout — creates a PaymentIntent/charge from the client-side-tokenized card and reports success/decline.",
+      "config": [
+        { "key": "STRIPE_API_KEY", "secret": true, "description": "Stripe secret API key used to create and capture charges server-side." }
       ] },
     { "kind": "external", "name": "email-provider", "description": "Sends order confirmation and fulfillment status emails to shoppers; concrete provider undecided — see candidates.",
       "candidates": [
