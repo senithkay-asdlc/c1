@@ -1,0 +1,28 @@
+{
+  "name": "ceramics-api",
+  "type": "service",
+  "version": "0.1.0",
+  "language": "Ballerina",
+  "buildpack": "docker",
+  "appPath": "ceramics-api",
+  "entrypoint": "deployment/service",
+  "exposure": "intranet",
+  "dependencies": [
+    { "kind": "platform-resource", "name": "ceramics-db", "resourceType": "postgres", "description": "Stores products, stock levels, carts, orders, and order line items." },
+    { "kind": "platform-resource", "name": "thunder-auth", "resourceType": "thunder-app", "parameters": { "scopes": "openid profile email" }, "description": "Validates caller tokens issued by Thunder and resolves the caller's role (Shopper vs Store Admin) for protected endpoints." },
+    { "kind": "external", "name": "payment-provider", "description": "Card payment processing at checkout; concrete provider undecided — see candidates.",
+      "candidates": [
+        { "name": "stripe", "style": "rest-api" },
+        { "name": "braintree", "style": "rest-api" },
+        { "name": "adyen", "style": "rest-api" }
+      ] },
+    { "kind": "external", "name": "email-provider", "description": "Sends order confirmation and fulfillment status emails to shoppers; concrete provider undecided — see candidates.",
+      "candidates": [
+        { "name": "sendgrid", "style": "rest-api" },
+        { "name": "postmark", "style": "rest-api" },
+        { "name": "resend", "style": "rest-api" }
+      ] }
+  ],
+  "description": "The backend for the ceramics store: product catalog with stock tracking, cart, checkout (card payment + flat-rate shipping), order history, and admin catalog/order management. Sits behind the gateway on the intranet exposure; the webapp is the only caller. Does not issue tokens (Thunder does) and does not talk to shipping carriers.",
+  "skillsPinned": ["openapi-conventions", "ballerina", "api-management", "thunder-authentication"]
+}
