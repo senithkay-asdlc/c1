@@ -1,0 +1,311 @@
+:root {
+  color-scheme: light;
+  --brand: #b5651d;
+  --border: #e0d9cf;
+  --danger: #b3261e;
+  --success: #2e7d32;
+  --warning: #b26a00;
+  --info: #1f5aa6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #2a2320;
+  background: #fbf8f4;
+}
+
+a {
+  color: var(--brand);
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--brand);
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.25rem;
+  flex: 1;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: #2a2320;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navbar-user {
+  color: #6b6259;
+  font-size: 0.9rem;
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.page-loading {
+  padding: 2rem;
+}
+
+.page-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.page-row-right {
+  margin-left: auto;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.page-row-right-only {
+  justify-content: flex-end;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.breadcrumb {
+  color: #6b6259;
+  font-size: 0.9rem;
+}
+
+.card-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  flex: 1;
+}
+
+.product-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.price {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.split-60-40 {
+  display: flex;
+  gap: 2rem;
+}
+
+.split-left {
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.split-right {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 300px;
+  border: 1px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9c9284;
+  background: #f2ede6;
+  overflow: hidden;
+}
+
+.image-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.field-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+input,
+select,
+textarea {
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+textarea {
+  min-height: 5rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary,
+a.btn-primary {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: var(--brand);
+  text-decoration: underline;
+  padding: 0;
+  cursor: pointer;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.qty-input {
+  width: 4rem;
+}
+
+.total-line {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.error-text {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-left: 0.4rem;
+}
+
+.badge-success {
+  background: #e5f4e6;
+  color: var(--success);
+}
+
+.badge-warning {
+  background: #fdf0dc;
+  color: var(--warning);
+}
+
+.badge-danger {
+  background: #fbe6e4;
+  color: var(--danger);
+}
+
+.badge-info {
+  background: #e5eef8;
+  color: var(--info);
+}
+
+.admin-shell {
+  min-height: 100vh;
+}
+
+.admin-body {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  background: #fff;
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #2a2320;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1100px;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.tab-active {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+}
