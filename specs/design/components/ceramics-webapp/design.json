@@ -7,10 +7,45 @@
   "appPath": "ceramics-webapp",
   "entrypoint": "deployment/web-application",
   "exposure": "internet",
-  "dependencies": [
-    { "kind": "component", "name": "ceramics-api", "description": "Calls the Ceramics API for catalog, cart, checkout, order, and admin management operations." },
-    { "kind": "platform-resource", "name": "thunder-auth", "resourceType": "thunder-app", "parameters": { "scopes": "openid profile email" }, "description": "Thunder SSO client for optional shopper sign-in and required Store Admin sign-in; provides the OIDC login/PKCE flow in-browser." }
-  ],
   "description": "The single-page storefront: a public catalog and guest/signed-in checkout for Shoppers, plus a Store Admin console (catalog and order management) served from the same bundle with role-scoped screens. Talks only to ceramics-api for data; holds no secrets and never calls payment or email providers directly.",
-  "skillsPinned": ["wireframes", "react-webapp", "thunder-authentication"]
+  "dependencies": [
+    {
+      "kind": "component",
+      "name": "ceramics-api",
+      "description": "Calls the Ceramics API for catalog, cart, checkout, order, and admin management operations.",
+      "wiring": {
+        "endpoint": {
+          "component": "c1-ceramics-api",
+          "name": "http",
+          "visibility": "project",
+          "envBindings": {
+            "address": "CERAMICS_API_URL"
+          }
+        }
+      }
+    },
+    {
+      "kind": "platform-resource",
+      "name": "thunder-auth",
+      "description": "Thunder SSO client for optional shopper sign-in and required Store Admin sign-in; provides the OIDC login/PKCE flow in-browser.",
+      "resourceType": "thunder-app",
+      "parameters": {
+        "scopes": "openid profile email"
+      },
+      "wiring": {
+        "ref": "c1-thunder-auth",
+        "envBindings": {
+          "client_id": "THUNDER_AUTH_CLIENT_ID",
+          "issuer": "THUNDER_AUTH_ISSUER",
+          "jwks_url": "THUNDER_AUTH_JWKS_URL",
+          "scopes": "THUNDER_AUTH_SCOPES"
+        }
+      }
+    }
+  ],
+  "skillsPinned": [
+    "wireframes",
+    "react-webapp",
+    "thunder-authentication"
+  ]
 }

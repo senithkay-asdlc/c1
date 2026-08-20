@@ -7,21 +7,86 @@
   "appPath": "ceramics-api",
   "entrypoint": "deployment/service",
   "exposure": "intranet",
-  "dependencies": [
-    { "kind": "platform-resource", "name": "ceramics-db", "resourceType": "postgres", "description": "Stores products, stock levels, carts, orders, and order line items." },
-    { "kind": "platform-resource", "name": "thunder-auth", "resourceType": "thunder-app", "parameters": { "scopes": "openid profile email" }, "description": "Validates caller tokens issued by Thunder and resolves the caller's role (Shopper vs Store Admin) for protected endpoints." },
-    { "kind": "external", "name": "payment-provider", "style": "rest-api", "specPath": "https://raw.githubusercontent.com/stripe/openapi/master/openapi/spec3.json",
-      "description": "Stripe's REST API for tokenized card charges at checkout — creates a PaymentIntent/charge from the client-side-tokenized card and reports success/decline.",
-      "config": [
-        { "key": "STRIPE_API_KEY", "secret": true, "description": "Stripe secret API key used to create and capture charges server-side." }
-      ] },
-    { "kind": "external", "name": "email-provider", "style": "rest-api", "specPath": "https://raw.githubusercontent.com/twilio/sendgrid-oai/main/spec/json/tsg_mail_v3.json",
-      "description": "SendGrid's Mail Send v3 REST API for order confirmation and fulfillment status emails to shoppers.",
-      "config": [
-        { "key": "SENDGRID_API_KEY", "secret": true, "description": "SendGrid API key used to authenticate mail-send requests." },
-        { "key": "SENDGRID_FROM_EMAIL", "defaultValue": "orders@ceramics-store.example", "description": "The verified sender address order emails are sent from." }
-      ] }
-  ],
   "description": "The backend for the ceramics store: product catalog with stock tracking, cart, checkout (card payment + flat-rate shipping), order history, and admin catalog/order management. Sits behind the gateway on the intranet exposure; the webapp is the only caller. Does not issue tokens (Thunder does) and does not talk to shipping carriers.",
-  "skillsPinned": ["openapi-conventions", "ballerina", "api-management", "thunder-authentication"]
+  "dependencies": [
+    {
+      "kind": "platform-resource",
+      "name": "ceramics-db",
+      "description": "Stores products, stock levels, carts, orders, and order line items.",
+      "resourceType": "postgres"
+    },
+    {
+      "kind": "platform-resource",
+      "name": "thunder-auth",
+      "description": "Validates caller tokens issued by Thunder and resolves the caller's role (Shopper vs Store Admin) for protected endpoints.",
+      "resourceType": "thunder-app",
+      "parameters": {
+        "scopes": "openid profile email"
+      },
+      "wiring": {
+        "ref": "c1-thunder-auth",
+        "envBindings": {
+          "client_id": "THUNDER_AUTH_CLIENT_ID",
+          "issuer": "THUNDER_AUTH_ISSUER",
+          "jwks_url": "THUNDER_AUTH_JWKS_URL",
+          "scopes": "THUNDER_AUTH_SCOPES"
+        }
+      }
+    },
+    {
+      "kind": "external",
+      "name": "payment-provider",
+      "description": "Stripe's REST API for tokenized card charges at checkout — creates a PaymentIntent/charge from the client-side-tokenized card and reports success/decline.",
+      "style": "rest-api",
+      "specPath": "https://raw.githubusercontent.com/stripe/openapi/master/openapi/spec3.json",
+      "config": [
+        {
+          "key": "STRIPE_API_KEY",
+          "secret": true,
+          "description": "Stripe secret API key used to create and capture charges server-side."
+        }
+      ],
+      "wiring": {
+        "ref": "c1-payment-provider",
+        "envBindings": {
+          "STRIPE_API_KEY": "STRIPE_API_KEY"
+        }
+      }
+    },
+    {
+      "kind": "external",
+      "name": "email-provider",
+      "description": "SendGrid's Mail Send v3 REST API for order confirmation and fulfillment status emails to shoppers.",
+      "style": "rest-api",
+      "specPath": "https://raw.githubusercontent.com/twilio/sendgrid-oai/main/spec/json/tsg_mail_v3.json",
+      "config": [
+        {
+          "key": "SENDGRID_API_KEY",
+          "secret": true,
+          "description": "SendGrid API key used to authenticate mail-send requests."
+        },
+        {
+          "key": "SENDGRID_FROM_EMAIL",
+          "description": "The verified sender address order emails are sent from.",
+          "defaultValue": "orders@ceramics-store.example"
+        }
+      ],
+      "wiring": {
+        "ref": "c1-email-provider",
+        "envBindings": {
+          "SENDGRID_API_KEY": "SENDGRID_API_KEY",
+          "SENDGRID_FROM_EMAIL": "SENDGRID_FROM_EMAIL"
+        }
+      }
+    }
+  ],
+  "exposesAPI": {
+    "auth": "end-user-required"
+  },
+  "skillsPinned": [
+    "openapi-conventions",
+    "ballerina",
+    "api-management",
+    "thunder-authentication"
+  ]
 }
